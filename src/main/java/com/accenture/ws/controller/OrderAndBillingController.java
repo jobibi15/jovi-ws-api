@@ -28,6 +28,11 @@ class OrderAndBillingController {
     	this.clerk = new CafeClerk();
     	clerk.setName("Jane Doe");
     }
+    
+    @GetMapping("/getClerk")
+    ResponseEntity<CafeClerk> getClerk(){
+        return ResponseEntity.ok(this.clerk);
+    }
 
     @GetMapping("/getOrderList")
     ResponseEntity<List<Order>> getOrderList(){

@@ -15,7 +15,7 @@ public class DiscountedBill extends OrderBill {
 				.stream()
 				.map(order -> {
 					if (order.isDiscounted()) {
-						return (100 - order.getIsDiscountPercentage()) * order.getPrice();
+						return ((100 - order.getIsDiscountPercentage()) / 100) * order.getPrice();
 					} else {
 						return order.getPrice();
 					}
