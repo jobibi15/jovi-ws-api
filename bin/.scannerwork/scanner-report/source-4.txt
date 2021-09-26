@@ -6,27 +6,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.sun.istack.NotNull;
-
 @Entity(name = "order_table")
 public class Order {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "order_id")
-	@NotNull
 	private Long id;
 
 	@Column(name = "order_name")
-	@NotNull
 	private String orderName;
 	
 	@Column(name = "price")
-	@NotNull
 	private double price;
 	
 	@Column(name = "is_discounted")
-	@NotNull
 	private boolean isDiscounted;
 	
 	@Column(name = "is_discount_percentage", columnDefinition = "double default 5.0")
@@ -36,8 +30,8 @@ public class Order {
 		return id;
 	}
 
-	public void setId(Long i) {
-		this.id = i;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getOrderName() {
@@ -72,10 +66,4 @@ public class Order {
 		this.isDiscountPercentage = isDiscountPercentage;
 	}
 
-	@Override
-	public String toString() {
-		return this.getId()+" "+this.getOrderName()+" "+this.getPrice()+" "+this.getIsDiscountPercentage();
-	}
-	
-	
 }

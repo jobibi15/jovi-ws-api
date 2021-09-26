@@ -2,9 +2,9 @@ package com.accenture.ws.controller;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,19 +34,8 @@ class OrderAndBillingController {
         return ResponseEntity.ok(orderRepo.findAll());
     }
 
-    @PostMapping("/addOrder")
-    ResponseEntity<Void> addOrder(@RequestBody Order order){
-    	orderValidation(order);
-    	orderRepo.save(order);
-    	return ResponseEntity.ok().build();
-    }
-    
-    @PostMapping("/updateOrder")
-    ResponseEntity<Void> updateOrder(@RequestBody Order order){
-    	orderValidation(order);
-    	if(!orderRepo.existsById(order.getId())){
-    		throw new RuntimeException("Order does not exist");
-    	}
+    @PostMapping("/addOrUpdateOrder")
+    ResponseEntity<Void> addOrUpdateOrder(@RequestBody Order order){
     	orderRepo.save(order);
     	return ResponseEntity.ok().build();
     }
@@ -69,15 +58,5 @@ class OrderAndBillingController {
     	DiscountedBill discountedBill = new DiscountedBill(clerk);
     	discountedBill.setOrderList(orderRepo.findAll());
     	return ResponseEntity.ok(discountedBill);
-    }
-    
-    private void orderValidation(Order order) {
-    	if (StringUtils.isBlank(order.getOrderName())) {
-    		throw new RuntimeException("Order Name must not be empty!");
-    	}
-    	
-    	if (order.getPrice() <= 0) {
-    		throw new RuntimeException("Order Price must not be equal to or less than 0!");
-    	}
     }
 }
