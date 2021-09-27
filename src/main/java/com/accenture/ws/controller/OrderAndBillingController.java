@@ -58,6 +58,9 @@ class OrderAndBillingController {
 
     @PostMapping("/deleteOrder")
     ResponseEntity<Void> deleteOrder(@RequestBody Order order){
+    	if (!orderRepo.existsById(order.getId())) {
+    		throw new RuntimeException("Order does not exist");
+    	}
     	orderRepo.deleteById(order.getId());
     	return ResponseEntity.ok().build();
     }
